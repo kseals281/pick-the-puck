@@ -1,4 +1,4 @@
-package main
+package nhlapi
 
 import (
 	"encoding/json"
@@ -16,7 +16,7 @@ const NHLAPI = "https://statsapi.web.nhl.com/api/v1"
 // 	today()
 // }
 
-func today() ScheduleAPI {
+func Today() ScheduleAPI {
 	var result ScheduleAPI
 	scheduleJSON := standardRequest("/schedule")
 	json.Unmarshal(scheduleJSON, &result)

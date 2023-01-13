@@ -1,4 +1,4 @@
-package main
+package nhlapi
 
 import (
 	"testing"
@@ -47,7 +47,7 @@ func Test_today(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			schedule := today()
+			schedule := Today()
 			if schedule.Copyright == "" {
 				t.Errorf("Did not find copyright in response")
 			}
