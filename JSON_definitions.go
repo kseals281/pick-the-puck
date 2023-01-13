@@ -69,9 +69,9 @@ type FranchisesAPI struct {
 }
 
 type GameType struct {
-	id          string `json:"id"`
-	description string `json:"description"`
-	postseason  bool   `json:"postseason"`
+	Id          string `json:"id"`
+	Description string `json:"description"`
+	Postseason  bool   `json:"postseason"`
 }
 
 type LeagueRecord struct {

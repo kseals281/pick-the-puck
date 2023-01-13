@@ -20,13 +20,36 @@ func Test_standardRequest(t *testing.T) {
 		}, {
 			"Standings",
 			args{"/standings"},
+		}, {
+			"Franchises",
+			args{"/franchises"},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			resp := standardRequest(tt.args.endpoint)
-			if gjson.GetBytes(resp, "copyright").Exists() {
+			if gjson.GetBytes(resp, "Copyright").Exists() {
 				t.Error("Did not find copyright in response")
+			}
+		})
+	}
+}
+
+func Test_today(t *testing.T) {
+	tests := []struct {
+		name string
+		// wantErr bool
+	}{
+		{
+			"Standard",
+			// true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			schedule := today()
+			if schedule.Copyright == "" {
+				t.Errorf("Did not find copyright in response")
 			}
 		})
 	}

@@ -1,8 +1,9 @@
 package main
 
 import (
-	"bufio"
 	"encoding/json"
+	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -15,19 +16,25 @@ const NHLAPI = "https://statsapi.web.nhl.com/api/v1"
 // 	today()
 // }
 
-// func today() {
-// 	resp, _ := http.Get(NHLAPI + "schedule")
-// 	fmt.Println(resp)
-// }
+func today() ScheduleAPI {
+	var result ScheduleAPI
+	scheduleJSON := standardRequest("/schedule")
+	json.Unmarshal(scheduleJSON, &result)
+	return result
+}
 
 func standardRequest(endpoint string) []byte {
-	resp, _ := http.Get(NHLAPI + endpoint)
-	reader := bufio.NewReader(resp.Body)
-	var respJSON []byte
-	reader.Read(respJSON)
+	resp, err := http.Get(NHLAPI + endpoint)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	if json.Valid(respJSON) {
-		return respJSON
+	responseData, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if json.Valid(responseData) {
+		return responseData
 	}
 	return nil
 }
