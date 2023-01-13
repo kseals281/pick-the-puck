@@ -9,17 +9,22 @@ import (
 
 const NHLAPI = "https://statsapi.web.nhl.com/api/v1"
 
-// type Schedule struct {
-// }
-
-// func schedule(teamID int) {
-// 	today()
-// }
+const (
+	NJD = 1
+	NYI = 2
+)
 
 func Today() ScheduleAPI {
 	var result ScheduleAPI
 	scheduleJSON := standardRequest("/schedule")
 	json.Unmarshal(scheduleJSON, &result)
+	return result
+}
+
+func Game(endpoint string) GameAPI {
+	var result GameAPI
+	gameJSON := standardRequest(endpoint)
+	json.Unmarshal(gameJSON, &result)
 	return result
 }
 

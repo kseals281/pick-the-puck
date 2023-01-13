@@ -17,6 +17,13 @@ type FranchisesAPI struct {
 	} `json:"franchises"`
 }
 
+type GameAPI struct {
+	Copyright string
+	GamePk    int
+	Link      string
+	GameData  GameData
+}
+
 type ScheduleAPI struct {
 	Copyright    string `json:"copyright"`
 	TotalItems   int    `json:"totalItems"`
@@ -29,6 +36,9 @@ type ScheduleAPI struct {
 	Wait  int     `json:"wait"`
 	Dates []Dates `json:"dates"`
 }
+
+/******************************************************************************
+******************************************************************************/
 
 type Dates struct {
 	Date         string        `json:"date"`
@@ -54,7 +64,20 @@ type Games struct {
 		StatusCode        string `json:"statusCode"`
 		StartTimeTBD      bool   `json:"startTimeTBD"`
 	} `json:"status"`
-	Teams Team
+	Teams struct {
+		Home struct {
+			LeagueRecord LeagueRecord `json:"league_record"`
+			Score        int          `json:"score"`
+			Team         Team         `json:"team"`
+		} `json:"home"`
+	} `json:"teams"`
+}
+
+type GameData struct {
+	Teams struct {
+		Home Team
+		Away Team
+	}
 }
 
 type GameType struct {
@@ -71,9 +94,12 @@ type LeagueRecord struct {
 }
 
 type Team struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Link string `json:"link"`
+	ID           int    `json:"id"`
+	Name         string `json:"name"`
+	Link         string `json:"link"`
+	Venue        Venue  `json:"venue"`
+	Abbreviation string `json:"abbreviation"`
+	TriCode      string `json:"triCode"`
 }
 
 type TimeZone struct {

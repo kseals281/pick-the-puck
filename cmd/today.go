@@ -35,13 +35,13 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		schedule := nhlapi.Today()
 		readGames(schedule.Dates[0].Games)
-		fmt.Println("today called")
 	},
 }
 
 func readGames(games []nhlapi.Games) {
 	for _, game := range games {
-		fmt.Println(game)
+		teams := nhlapi.Game(game.Link[7:]).GameData.Teams
+		fmt.Printf("%s @ %s\n", teams.Away.Abbreviation, teams.Home.Abbreviation)
 	}
 }
 
