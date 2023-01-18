@@ -34,9 +34,10 @@ to quickly create a Cobra application.`,
 
 func readScores(games []nhlapi.Games) {
 	for _, game := range games {
-		fmt.Printf("%s: %d\t@\t%s: %d\n",
+		fmt.Printf("|%-22s| %d | @ | %d |%22s|\n",
 			game.Teams.Away.Team.Name, game.Teams.Away.Score,
-			game.Teams.Home.Team.Name, game.Teams.Home.Score)
+			game.Teams.Home.Score, game.Teams.Home.Team.Name)
+		fmt.Println("-----------------------------------------------------------")
 	}
 }
 
