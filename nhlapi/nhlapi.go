@@ -2,9 +2,11 @@ package nhlapi
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 const NHLAPI = "https://statsapi.web.nhl.com/api/v1"
@@ -14,10 +16,17 @@ const (
 	NYI = 2
 )
 
-func Today() ScheduleAPI {
-	var result ScheduleAPI
-	scheduleJSON := standardRequest("/schedule")
-	json.Unmarshal(scheduleJSON, &result)
+func DateEndpoint(date time.Time) string {
+	y, m, d := date.Date()
+	startDate := fmt.Sprintf("startDate=%d-%d-%d", y, m, d)
+	endDate := fmt.Sprintf("endDate=%d-%d-%d", y, m, d)
+	return fmt.Sprint(startDate + "&" + endDate)
+}
+
+func Game(endpoint string) GameAPI {
+	var result GameAPI
+	gameJSON := standardRequest(endpoint)
+	json.Unmarshal(gameJSON, &result)
 	return result
 }
 
@@ -28,10 +37,10 @@ func Schedule(endpoint string) ScheduleAPI {
 	return result
 }
 
-func Game(endpoint string) GameAPI {
-	var result GameAPI
-	gameJSON := standardRequest(endpoint)
-	json.Unmarshal(gameJSON, &result)
+func Today() ScheduleAPI {
+	var result ScheduleAPI
+	scheduleJSON := standardRequest("/schedule")
+	json.Unmarshal(scheduleJSON, &result)
 	return result
 }
 

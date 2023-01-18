@@ -17,6 +17,7 @@ package cmd
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/kseals281/pick-the-puck/nhlapi"
 	"github.com/spf13/cobra"
@@ -33,15 +34,19 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		schedule := nhlapi.Today()
+		today := time.Now()
+		schedule := nhlapi.Schedule(nhlapi.DateEndpoint(today))
 		readGames(schedule.Dates[0].Games)
 	},
 }
 
 func readGames(games []nhlapi.Games) {
+	fmt.Println("---------------------------------------------------")
 	for _, game := range games {
-		teams := nhlapi.Game(game.Link[7:]).GameData.Teams
-		fmt.Printf("%s @ %s\n", teams.Away.Abbreviation, teams.Home.Abbreviation)
+		gameData := nhlapi.Game(game.Link[7:]).GameData
+		teams := gameData.Teams
+		fmt.Printf("|%-22s| @ |%22s|\n", teams.Away.Name, teams.Home.Name)
+		fmt.Println("---------------------------------------------------")
 	}
 }
 

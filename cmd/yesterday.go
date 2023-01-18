@@ -5,8 +5,9 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/kseals281/pick-the-puck/nhlapi"
 	"time"
+
+	"github.com/kseals281/pick-the-puck/nhlapi"
 
 	"github.com/spf13/cobra"
 )
@@ -14,7 +15,7 @@ import (
 // yesterdayCmd represents the yesterday command
 var yesterdayCmd = &cobra.Command{
 	Use:   "yesterday",
-	Short: "A brief description of your command",
+	Short: "Display scores for the previous day's games",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -24,15 +25,13 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		today := time.Now()
 		yesterday := today.Add(-(time.Hour * 24))
-		y, m, d := yesterday.Date()
-		startDate := fmt.Sprintf("startDate=%d-%d-%d", y, m, d)
-		endDate := fmt.Sprintf("endDate=%d-%d-%d", y, m, d)
-		schedule := nhlapi.Schedule(startDate + "&" + endDate)
+		schedule := nhlapi.Schedule(nhlapi.DateEndpoint(yesterday))
 		readScores(schedule.Dates[0].Games)
 	},
 }
 
 func readScores(games []nhlapi.Games) {
+	fmt.Println("-----------------------------------------------------------")
 	for _, game := range games {
 		fmt.Printf("|%-22s| %d | @ | %d |%22s|\n",
 			game.Teams.Away.Team.Name, game.Teams.Away.Score,
