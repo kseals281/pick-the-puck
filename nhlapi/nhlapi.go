@@ -21,6 +21,13 @@ func Today() ScheduleAPI {
 	return result
 }
 
+func Schedule(endpoint string) ScheduleAPI {
+	var result ScheduleAPI
+	scheduleJSON := standardRequest("/schedule?" + endpoint)
+	json.Unmarshal(scheduleJSON, &result)
+	return result
+}
+
 func Game(endpoint string) GameAPI {
 	var result GameAPI
 	gameJSON := standardRequest(endpoint)
