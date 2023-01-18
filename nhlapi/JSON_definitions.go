@@ -65,6 +65,11 @@ type Games struct {
 		StartTimeTBD      bool   `json:"startTimeTBD"`
 	} `json:"status"`
 	Teams struct {
+		Away struct {
+			LeagueRecord LeagueRecord `json:"league_record"`
+			Score        int          `json:"score"`
+			Team         Team         `json:"team"`
+		}
 		Home struct {
 			LeagueRecord LeagueRecord `json:"league_record"`
 			Score        int          `json:"score"`
