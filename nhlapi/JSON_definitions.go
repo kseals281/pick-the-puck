@@ -51,6 +51,11 @@ type Dates struct {
 	Matches      []interface{} `json:"matches"`
 }
 
+type DateTime struct {
+	DateTime    time.Time `json:"dateTime"`
+	EndDateTime time.Time `json:"endDateTime"`
+}
+
 type Games struct {
 	GamePk   int       `json:"gamePk"`
 	Link     string    `json:"link"`
@@ -79,10 +84,11 @@ type Games struct {
 }
 
 type GameData struct {
-	Teams struct {
-		Home Team
-		Away Team
-	}
+	DateTime DateTime `json:"datetime"`
+	Teams    struct {
+		Home Team `json:"home"`
+		Away Team `json:"away"`
+	} `json:"teams"`
 }
 
 type GameType struct {
