@@ -41,14 +41,14 @@ to quickly create a Cobra application.`,
 }
 
 func readGames(games []nhlapi.Games) {
-	fmt.Println("----------------------------------------------------------")
+	fmt.Println("---------------------------------------------------------")
 	for _, game := range games {
 		gameData := nhlapi.Game(game.Link[7:]).GameData
 		teams := gameData.Teams
 		loc := time.FixedZone("UTC-5", -5*60*60)
 		gameTime := gameData.DateTime.DateTime.In(loc)
-		fmt.Printf("|%-22s| %8v |%22s|\n", teams.Away.Name, gameTime.Format(time.Kitchen), teams.Home.Name)
-		fmt.Println("----------------------------------------------------------")
+		fmt.Printf("|%-22s| %7v |%22s|\n", teams.Away.Name, gameTime.Format(time.Kitchen), teams.Home.Name)
+		fmt.Println("---------------------------------------------------------")
 	}
 }
 
