@@ -26,7 +26,7 @@ import (
 // todayCmd represents the today command
 var todayCmd = &cobra.Command{
 	Use:   "today",
-	Short: "A list of NHL matchups on the current day",
+	Short: "A list of NHL matc-ups on the current day",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -45,7 +45,8 @@ func readGames(games []nhlapi.Games) {
 	for _, game := range games {
 		gameData := nhlapi.Game(game.Link[7:]).GameData
 		teams := gameData.Teams
-		loc := time.FixedZone("UTC-5", -5*60*60)
+		// TODO: Auto detect timezone
+		loc := time.FixedZone("UTC-4", -4*60*60)
 		gameTime := gameData.DateTime.DateTime.In(loc)
 		fmt.Printf("|%-22s| %7v |%22s|\n", teams.Away.Name, gameTime.Format(time.Kitchen), teams.Home.Name)
 		fmt.Println("---------------------------------------------------------")
